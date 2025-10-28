@@ -1,0 +1,85 @@
+{
+  "hero": {
+    "title": "Koleksi Aksesoris Etnik",
+    "paragraph1": "ARARA ART menghadirkan koleksi aksesoris etnik kontemporer yang memadukan keanggunan budaya Nusantara dengan desain modern.",
+    "paragraph2": "Dibuat dengan tangan oleh pengrajin lokal, setiap detail menuturkan cerita — tentang akar budaya, keindahan bentuk, dan ekspresi diri yang otentik.",
+    "button": "Jelajahi Katalog"
+  },
+
+  "about": {
+    "title": "Tentang Kami",
+    "description": "ARARA ART adalah studio seni dan kerajinan yang berfokus pada pembuatan produk-produk etnik kontemporer dengan sentuhan budaya lokal Indonesia. Kami memadukan kearifan tradisional dengan gaya modern untuk menciptakan karya yang memiliki nilai estetika tinggi serta cerita di balik setiap detailnya.",
+    "cards": [
+      {
+        "title": "Kerajinan Tangan",
+        "description": "Setiap karya dibuat dengan teliti oleh pengrajin berpengalaman, memastikan setiap produk memiliki sentuhan unik dan personal."
+      },
+      {
+        "title": "Perpaduan Budaya",
+        "description": "Kami memadukan motif tradisional Indonesia dengan elemen desain modern untuk merayakan warisan budaya melalui seni kontemporer."
+      },
+      {
+        "title": "Keberlanjutan",
+        "description": "Proses kami menekankan penggunaan bahan ramah lingkungan dan praktik produksi berkelanjutan yang menghormati alam dan budaya."
+      },
+      {
+        "title": "Komunitas Lokal",
+        "description": "Kami berkomitmen untuk memberdayakan komunitas lokal dengan memberikan pelatihan dan peluang kerja bagi para pengrajin di daerah kami."
+      }
+    ]
+  },
+
+  "collections": {
+    "title": "KOLEKSI",
+    "paragraph": "Kami bekerja sama dengan pengrajin perhiasan berpengalaman yang menggunakan bahan berkualitas tinggi dan tahan lama, mulai dari logam mulia hingga batu permata yang bersumber secara bertanggung jawab.",
+    "button": "Lihat Semua Koleksi",
+    "cards":[
+      {
+        "title": "LUMINA NECKLACE",
+        "description": "Kalung elegan yang terinspirasi dari kilau cahaya alami — memancarkan keanggunan dalam setiap detailnya."
+      }
+      ,
+      {
+        "title": "SERENE BRACELET",
+        "description": "Gelang yang memadukan motif tradisional Indonesia dengan desain modern, menciptakan harmoni budaya yang unik."
+      }
+      ,
+      {
+        "title": "AURA HAIRPIN",
+        "description": "Pin rambut eksklusif yang memadukan seni dan fungsionalitas — mempercantik gaya dengan nuansa artistik khas Arara."
+      }
+      ,
+      {
+        "title": "SUNRISE NECKLACE",
+        "description": "Kalung yang terinspirasi dari keindahan matahari terbit di Nusantara, melambangkan harapan dan awal baru."
+      }
+    ]
+  },
+
+  
+  "footer": {
+    "brand": "ARARA ART",
+    "description": "Karya seni yang menyatu antara keindahan dan ekspresi budaya lokal. Kami menghadirkan desain artistik dalam berbagai bentuk kreatif.",
+    "address": "📍 Jl. Simo Hilir Utara VII No.9 Blok 4H, Simomulyo Baru, Sukomanunggal, Surabaya, Jawa Timur 60281",
+    "phone": "📞 +62 813-3100-2003",
+    "email": "✉️ arara@gmail.com",
+    "locationTitle": "Lokasi Kami",
+    "copyright": "© 2025 ARARA ART. Hak Cipta Dilindungi."
+  },
+  "product": {
+    "all": "Semua",
+    "category": "Kategori",
+    "allProducts": "Semua Produk",
+    "uncategorized": "Tanpa Kategori",
+    "loading": "Memuat produk...",
+    "emptyCategory": "Tidak ada produk dalam kategori ini."
+  },
+   "news": {
+    "title": "Berita",
+    "all": "Semua",
+    "viewAll": "Lihat Semua Berita",
+    "empty": "Tidak ada artikel berita ditemukan.",
+    "loading": "Memuat berita..."
+  }
+
+}

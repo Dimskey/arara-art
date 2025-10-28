@@ -1,0 +1,87 @@
+{
+  "hero": {
+    "title": "Ethnic Accessories Collection",
+    "paragraph1": "ARARA ART presents a collection of contemporary ethnic accessories that combine the elegance of Indonesian culture with modern design.",
+    "paragraph2": "Handcrafted by local artisans, every detail tells a story — of cultural roots, beauty of form, and authentic self-expression.",
+    "button": "Explore Catalog"
+  },
+
+  "about": {
+    "title": "About Us",
+    "description": "ARARA ART is an art and craft studio focused on creating contemporary ethnic products with a touch of Indonesian local culture. We blend traditional wisdom with modern style to craft works that carry aesthetic value and stories behind every detail.",
+    "cards": [
+      {
+        "title": "Craftsmanship",
+        "description": "Each creation is meticulously handmade by skilled artisans, ensuring every piece carries a unique and personal touch."
+      },
+      {
+        "title": "Cultural Fusion",
+        "description": "We combine traditional Indonesian motifs with modern design elements to celebrate cultural heritage through contemporary art."
+      },
+      {
+        "title": "Sustainability",
+        "description": "Our process emphasizes eco-friendly materials and sustainable production practices that honor both nature and culture."
+      },
+      {
+        "title": "Local Community",
+        "description": "We are committed to empowering the local community by providing training and job opportunities for artisans in our region."
+      }
+    ]
+  },
+
+  "collections": {
+    "title": "COLLECTIONS",
+    "paragraph": "We work with expert jewelers who use high-quality and enduring materials, from precious metals to responsibly sourced gems.",
+    "button": "Show All Collections",
+    "cards":[
+      {
+        "title": "LUMINA NECKLACE",
+        "description": "An elegant necklace inspired by the natural glow of light — radiating elegance in every detail."
+      }
+      ,
+      {
+        "title": "SERENE BRACELET",
+        "description": "A bracelet that blends traditional Indonesian motifs with modern design, creating a unique cultural harmony."
+      }
+      ,
+      {
+        "title": "AURA HAIRPIN",
+        "description": "An exclusive hairpin that combines art and functionality — beautifying style with Arara's distinctive artistic nuance."
+      }
+      ,
+      {
+        "title": "SUNRISE NECKLACE",
+        "description": "A necklace inspired by the beauty of the sunrise in the Indonesian archipelago, symbolizing hope and new beginnings."
+      }
+    ]
+  },
+
+  "footer": {
+    "brand": "ARARA ART",
+    "description": "A harmony of beauty and local cultural expression. We bring artistic design in various creative forms.",
+    "address": "📍 Jl. Simo Hilir Utara VII No.9 Blok 4H, Simomulyo Baru, Sukomanunggal, Surabaya, East Java 60281",
+    "phone": "📞 +62 813-3100-2003",
+    "email": "✉️ arara@gmail.com",
+    "locationTitle": "Our Location",
+    "copyright": "© 2025 ARARA ART. All Rights Reserved."
+  },
+  "product": {
+    "all": "All",
+    "category": "Category",
+    "allProducts": "All Products",
+    "uncategorized": "Uncategorized",
+    "loading": "Loading products...",
+    "emptyCategory": "No products found in this category."
+  },
+   "news": {
+    "title": "News",
+    "all": "All",
+    "viewAll": "View All News",
+    "empty": "No news articles found.",
+    "loading": "Loading news..."
+  }
+
+}
+
+
+

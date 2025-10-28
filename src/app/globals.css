@@ -1,26 +1,67 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Light Mode (Default) */
+  --color-background: #FFFFFF;
+  --color-foreground: #000000;
+  --color-accent: #333333;
+  --color-border: #000000;
+  --color-card-bg: #F5F5F5;
+  --color-placeholder-from: #E8E8E8;
+  --color-placeholder-via: #D8D8D8;
+  --color-placeholder-to: #E8E8E8;
+
+  --font-family-serif: var(--font-cormorant), serif;
+  --font-family-sans: var(--font-montserrat), sans-serif;
+
+  --letter-spacing-widest-2: 0.2em;
+  --letter-spacing-widest-3: 0.3em;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Dark Mode Override */
+.dark {
+  --color-background: #000000;
+  --color-foreground: #FFFFFF;
+  --color-accent: #CCCCCC;
+  --color-border: #fafafa;
+  --color-card-bg: #0a0a0a;
+  --color-placeholder-from: #1a1a1a;
+  --color-placeholder-via: #2a2a2a;
+  --color-placeholder-to: #1a1a1a;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--color-border);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html {
+  zoom: 0.9;
+  scroll-behavior: smooth;
+}
+
+/* Utility untuk sembunyikan scrollbar */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
