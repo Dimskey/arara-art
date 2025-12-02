@@ -8,7 +8,7 @@ export const collections: Collection[] = [
   },
   {
     id: "2",
-    image: "/images/Pokecut_1760168027495.jpg",
+    image: "/images/models.png",
     slug: "zaza",
   },
   {

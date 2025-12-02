@@ -39,7 +39,7 @@ export default function NewsClient({ news, lang }: { news: NewsItem[]; lang?: st
               <Link
                 key={item._id}
                 href={`/${validLang}/news/${item.slug}`}
-                className="border border-[var(--color-border)] rounded-2xl overflow-hidden group hover:border-[var(--color-accent)] transition"
+                className="border border-[var(--color-border)]  overflow-hidden group hover:border-[var(--color-accent)] transition"
               >
                 <div className="aspect-[4/3] relative overflow-hidden">
                   {item.imageUrl && (
@@ -47,6 +47,7 @@ export default function NewsClient({ news, lang }: { news: NewsItem[]; lang?: st
                       src={urlFor(item.imageUrl).width(600).url()}
                       alt={item.title}
                       fill
+                      sizes="(max-width: 768px) 100vw, 25vw"
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   )}

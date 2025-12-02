@@ -5,6 +5,8 @@ import { aboutbanners } from "@/data/AboutBanner";
 import ImagePlaceholder from "@/components/shared/ImagePlaceholder";
 import { gsap } from "@/lib/gsapClient";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { debugScroll } from "@/lib/debugScroll";
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,40 +18,54 @@ export default function AboutUs() {
   const cardsRef = useRef<HTMLDivElement[]>([]);
 
   // Push card elements to ref array (tanpa return)
-  const addToRefs = (el: HTMLDivElement | null) => {
-    if (el && !cardsRef.current.includes(el)) {
-      cardsRef.current.push(el);
-    }
-  };
+ const addToRefs = (el: HTMLDivElement | null) => {
+  if (el) {
+    cardsRef.current.push(el);
+  }
+};
 
-  useLayoutEffect(() => {
-    // Title fade in
-    if (titleRef.current) {
-      gsap.from(titleRef.current, {
-        opacity: 0,
-        y: 40,
-        duration: 0.8,
+
+ useLayoutEffect(() => {
+  const ctx = gsap.context(() => {
+    gsap.fromTo(
+      titleRef.current,
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 2.5,
+        ease: "power3.out",
+       
+      }
+    );
+
+    gsap.fromTo(
+      cardsRef.current,
+      {  
+      opacity: 0, x: (i) => (i === 0 || i === 1 ? -60 : 60),
+    },
+      {
+        opacity: 1,
+        x: 0,
+        stagger: 0.5,
+        duration: 1,
         ease: "power3.out",
         scrollTrigger: {
           trigger: "#about",
-          start: "top 80%",
+          start: "top 95%",
+          end: "bottom 70%",
+         
+          toggleActions: "play reverse play reverse",
         },
-      });
-    }
+      }
+    );
+  });
 
-    // Card stagger animation
-    gsap.from(cardsRef.current, {
-      opacity: 0,
-      y: 60,
-      stagger: 0.25,
-      duration: 1,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: "#about",
-        start: "top 75%",
-      },
-    });
-  }, []);
+  return () => ctx.revert();
+  
+}, [t]); 
+ // re run saat bahasa berubah
+cardsRef.current = [];
 
   return (
     <section
@@ -61,12 +77,13 @@ export default function AboutUs() {
           {/* Left Section */}
           <div className="space-y-6">
             <h1
+            id="title"
               ref={titleRef}
-              className="text-3xl lg:text-4xl font-medium tracking-widest uppercase"
+              className="text-4xl lg:text-4xl font-medium tracking-widest uppercase"
             >
               {t("about.title")}
             </h1>
-            <p className="text-[var(--color-accent)] text-base leading-relaxed">
+            <p ref={titleRef} className="text-[var(--color-accent)] text-base leading-relaxed">
               {t("about.description")}
             </p>
           </div>

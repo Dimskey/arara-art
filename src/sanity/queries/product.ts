@@ -23,6 +23,7 @@ export const productBySlugQuery = `
     images[]{ "url": asset->url },
     price,
     discountPrice,
+    specifications,
     description,
     shopeeLink,
     tokopediaLink,

@@ -49,10 +49,29 @@ export const news = defineType({
       type: "datetime",
     }),
     defineField({
-      name: "body",
-      title: "Body Content",
-      type: "array",
-      of: [{ type: "block" }],
-    }),
+  name: "body",
+  title: "Body Content",
+  type: "array",
+  of: [
+    { type: "block" },
+    {
+      type: "image",
+      options: { hotspot: true },
+      fields: [
+        {
+          name: "alt",
+          type: "string",
+          title: "Alt Text",
+        },
+        {
+          name: "caption",
+          type: "string",
+          title: "Caption",
+        }
+      ]
+    }
+  ],
+}),
+
   ],
 });

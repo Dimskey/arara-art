@@ -8,18 +8,35 @@ import ThemeToggle from "@/components/ui/ThemeToggle";
 import LanguageSwitcher from "@/components/ui/LangSwitcer";
 import { useLang } from "@/contexts/langContext";
 import { gsap } from "@/lib/gsapClient";
+import SearchBox from "../ui/SearchBox";
 
 export default function Header() {
   const { lang } = useLang();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // ✅ Anti-jitter scroll state
   const [isScrolled, setIsScrolled] = useState(false);
-  const menuRef = useRef<HTMLElement>(null);
+  const last = useRef(false);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 80);
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => {
+      const y = window.scrollY;
+
+      // deadzone: baru berubah jika melewati batas jauh
+      if (!last.current && y > 120) {
+        setIsScrolled(true);
+        last.current = true;
+      } else if (last.current && y < 50) {
+        setIsScrolled(false);
+        last.current = false;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const menuRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (isMobileMenuOpen && menuRef.current) {
@@ -30,21 +47,26 @@ export default function Header() {
           opacity: 1,
           y: 0,
           scale: 1,
-          duration: 0.35,
+          duration: 1.25,
           ease: "power2.out",
-          stagger: 0.08,
+          stagger: 0.58
         }
       );
     }
   }, [isMobileMenuOpen]);
 
   return (
-    <header className="p-3 sticky top-0 z-50 border-b border-[var(--color-border)] backdrop-blur-md bg-[var(--color-background)/80] transition-colors duration-500">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col transition-all duration-500">
-        {/* Logo (Smooth hide) */}
+    <header
+      className="p-3 sticky top-0 z-50 border-b border-[var(--color-border)]
+      backdrop-blur-md bg-[var(--color-background)/80]
+      transition-[background-color,transform,opacity] duration-500"
+    >
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col">
+
+        {/* Logo  */}
         <div
-          className={`overflow-hidden text-center transition-[opacity,max-height] duration-500 
-          ${isScrolled ? "max-h-0 opacity-0" : "max-h-12 opacity-100"}
+          className={`overflow-hidden text-center transition-[opacity,max-height,transform] duration-500 
+          ${isScrolled ? "max-h-0 opacity-0 -translate-y-2" : "max-h-12 opacity-100 translate-y-0"}
         `}
         >
           <Link href={`/${lang}`}>
@@ -57,11 +79,10 @@ export default function Header() {
         {/* Navigation Row */}
         <div
           className={`flex items-center justify-between relative
-            lg:transition-transform lg:duration-500 
+            transition-transform duration-500 
             ${isScrolled ? "lg:-translate-y-2" : "lg:translate-y-0"}
           `}
         >
-          {/* Left: Theme Toggle */}
           <div className="flex items-center gap-4 pb-2">
             <ThemeToggle />
           </div>
@@ -81,9 +102,10 @@ export default function Header() {
             </div>
           </nav>
 
-          {/* Mobile - Language + Button */}
+          {/* Mobile - Lang + Hamburger */}
           <div className="flex items-center  gap-4">
             <LanguageSwitcher />
+             <SearchBox />
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="lg:hidden p-2 rounded-md border border-[var(--color-border)] hover:bg-[var(--color-muted)] transition-colors"
@@ -110,11 +132,11 @@ export default function Header() {
                   href={`/${lang}${link.href}`}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="
-            w-full py-3 px-4 flex items-center
-            text-[var(--color-foreground)]
-            hover:text-[var(--color-accent)]
-            transition-colors
-          "
+                    w-full py-3 px-4 flex items-center
+                    text-[var(--color-foreground)]
+                    hover:text-[var(--color-accent)]
+                    transition-colors
+                  "
                 >
                   {link.label}
                 </Link>

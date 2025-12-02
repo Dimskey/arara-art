@@ -69,6 +69,13 @@ export default defineType({
     }),
 
     defineField({
+      name: "specifications",
+      title: "specifications",
+      type: "array",
+      of: [{ type: "string"}],
+    }),
+
+    defineField({
       name: "category",
       title: "Category",
       type: "string",

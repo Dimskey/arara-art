@@ -1,46 +1,38 @@
 "use client";
 
+import React from "react";
 import { collections } from "@/data/collections";
 import CollectionCard from "@/components/shared/CollectionCard";
-import Button from "@/components/ui/Button";
 import { useLang } from "@/contexts/langContext";
 
 export default function CollectionsSection() {
-  const { t, lang } = useLang();
-  const collectionsText = t("collections");
+  const { t } = useLang();
   const cards = t("collections.cards") as any[];
 
   return (
-    <section className="py-20 lg:py-28 border-t border-[var(--color-border)]/30 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-medium tracking-[0.25em] mb-6">
-            {collectionsText.title}
-          </h2>
-          <p className="text-[var(--color-accent)] text-base leading-relaxed max-w-2xl mx-auto">
-            {collectionsText.paragraph}
-          </p>
-        </div>
+    <section id="collections" className=" border-t max-w-8xl mx-auto px-8 py-16 overflow-hidden">
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-12">
-          {collections.map((collection, index) => (
-            <CollectionCard
-              key={collection.id}
-              collection={collection}
-              cardData={cards[index]}
-              featured={index === 0}
-            />
-          ))}
-        </div>
+      {/* ✅ Title + Description */}
+      <div className="text-center mb-12">
+        <h2 className="text-4xl lg:text-5xl font-medium tracking-[0.25em]">
+          {t("collections.title")}
+        </h2>
+        <p className="text-[var(--color-accent)]/80 mt-2 text-sm max-w-md mx-auto leading-relaxed">
+          {t("collections.paragraph")}
+        </p>
+      </div>
 
-        {/* Button */}
-        <div className="flex justify-center">
-          <Button onClick={() => (window.location.href = `/${lang}/product`)}>
-            {collectionsText.button}
-          </Button>
-        </div>
+      {/* ✅ Grid Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto px-8 py-16 overflow-hidden">
+        {collections.map((collection, index) => (
+          <CollectionCard
+            key={collection.id}
+            collection={collection}
+            cardData={cards[index]}
+            featured={index === 0}
+            index={index}
+          />
+        ))}
       </div>
     </section>
   );
