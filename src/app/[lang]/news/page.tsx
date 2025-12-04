@@ -3,11 +3,16 @@ import { allNewsQuery } from "@/sanity/queries/news";
 import { NewsItem } from "@/types/news";
 import Image from "next/image";
 import Link from "next/link";
-import { urlFor } from "@/sanity/lib/image";
 import Header from "@/components/layout/Header";
 
-export default async function NewsPage({ params }: { params: Promise<{ lang: string }> }) {
-  const { lang } = await params;
+
+
+export default async function NewsPage({ 
+  params 
+}: { 
+  params: Promise<{ lang: string }> 
+}) {
+  const { lang } = await params; // Await the params
   const news: NewsItem[] = await client.fetch(allNewsQuery, { lang });
 
   return (
@@ -45,7 +50,7 @@ export default async function NewsPage({ params }: { params: Promise<{ lang: str
                   <div className="aspect-[4/3] relative overflow-hidden">
                     {item.imageUrl ? (
                       <Image
-                        src={urlFor(item.imageUrl).width(600).url()}
+                        src={item.imageUrl}
                         alt={item.title}
                         fill
                         className="object-cover transition-transform duration-500 group-hover:scale-105"

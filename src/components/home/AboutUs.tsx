@@ -5,15 +5,23 @@ import { aboutbanners } from "@/data/AboutBanner";
 import ImagePlaceholder from "@/components/shared/ImagePlaceholder";
 import { gsap } from "@/lib/gsapClient";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { debugScroll } from "@/lib/debugScroll";
-
+interface AboutCard {
+  title: string;
+  description: string;
+}
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function AboutUs() {
   const { t } = useLang();
 
-  const cards = t("about.cards") as any[];
+  // Helper function to ensure t() returns string
+  const tString = (key: string): string => {
+    const value = t(key);
+    return typeof value === "string" ? value : key;
+  };
+
+  const cards = t("about.cards") as AboutCard[];
   const titleRef = useRef<HTMLHeadingElement>(null);
   const cardsRef = useRef<HTMLDivElement[]>([]);
 
@@ -81,10 +89,10 @@ cardsRef.current = [];
               ref={titleRef}
               className="text-4xl lg:text-4xl font-medium tracking-widest uppercase"
             >
-              {t("about.title")}
+              {tString("about.title")}
             </h1>
             <p ref={titleRef} className="text-[var(--color-accent)] text-base leading-relaxed">
-              {t("about.description")}
+              {tString("about.description")}
             </p>
           </div>
 

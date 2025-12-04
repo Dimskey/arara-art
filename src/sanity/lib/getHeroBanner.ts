@@ -1,11 +1,20 @@
 import { client } from "./client";
 import { heroBannerQuery } from "@/sanity/queries/herobanner";
 
+interface HeroBannerItem {
+  title_id?: string;
+  title_en?: string;
+  description_id?: string;
+  description_en?: string;
+  image?: { asset?: { url?: string } };
+  link?: string;
+}
+
 export async function getHeroBanner(lang: string) {
   try {
-    const data = await client.fetch(heroBannerQuery);
+    const data = await client.fetch<HeroBannerItem[]>(heroBannerQuery);
 
-    return data.map((item: any) => ({
+    return data.map((item) => ({
       title: lang === "id" ? item.title_id : item.title_en,
       description: lang === "id" ? item.description_id : item.description_en,
       imageUrl: item.image?.asset?.url || null, // 🔥 aman

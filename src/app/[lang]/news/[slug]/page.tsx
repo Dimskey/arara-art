@@ -1,3 +1,4 @@
+import React from "react";
 import Header from "@/components/layout/Header";
 import { client } from "@/sanity/lib/client";
 import { singleNewsQuery } from "@/sanity/queries/news";
@@ -13,20 +14,25 @@ import imageUrlBuilder from "@sanity/image-url";
  * Image Builder
  * --------------------------------------------- */
 const builder = imageUrlBuilder(client);
-const urlFor = (src: any) => builder.image(src).auto("format");
+const urlFor = (src: { asset?: { _ref?: string; _type?: string } }) => builder.image(src).auto("format");
 
 /* -----------------------------------------------
  * Static Params
  * --------------------------------------------- */
+interface NewsParams {
+  slug: string;
+  language: string;
+}
+
 export async function generateStaticParams() {
-  const news = await client.fetch(`
+  const news = await client.fetch<NewsParams[]>(`
     *[_type == "news" && defined(slug.current)]{
       "slug": slug.current,
       language
     }
   `);
 
-  return news.map((item: any) => ({
+  return news.map((item) => ({
     slug: String(item.slug),
     lang: String(item.language),
   }));
@@ -35,9 +41,15 @@ export async function generateStaticParams() {
 /* -----------------------------------------------
  * PortableText Components (FULL)
  * --------------------------------------------- */
+interface PortableImageValue {
+  asset?: { _ref?: string; _type?: string };
+  alt?: string;
+  caption?: string;
+}
+
 const portableComponents = {
   types: {
-    image: ({ value }: any) => {
+    image: ({ value }: { value: PortableImageValue }) => {
       if (!value?.asset) return null;
       return (
         <figure className="my-10 w-full flex flex-col items-center">
@@ -59,31 +71,31 @@ const portableComponents = {
   },
 
   block: {
-    h2: ({ children }: any) => (
+    h2: ({ children }: { children?: React.ReactNode }) => (
       <h2 className="text-3xl font-semibold mt-10 mb-4">{children}</h2>
     ),
-    h3: ({ children }: any) => (
+    h3: ({ children }: { children?: React.ReactNode }) => (
       <h3 className="text-2xl font-semibold mt-8 mb-3">{children}</h3>
     ),
-    h4: ({ children }: any) => (
+    h4: ({ children }: { children?: React.ReactNode }) => (
       <h4 className="text-xl font-semibold mt-6 mb-3">{children}</h4>
     ),
-    blockquote: ({ children }: any) => (
+    blockquote: ({ children }: { children?: React.ReactNode }) => (
       <blockquote className="border-l-4 pl-4 italic opacity-80 my-6">
         {children}
       </blockquote>
     ),
-    normal: ({ children }: any) => (
+    normal: ({ children }: { children?: React.ReactNode }) => (
       <p className="leading-relaxed mb-4">{children}</p>
     ),
   },
 
   marks: {
-    strong: ({ children }: any) => (
+    strong: ({ children }: { children?: React.ReactNode }) => (
       <strong className="font-semibold">{children}</strong>
     ),
-    em: ({ children }: any) => <em className="italic">{children}</em>,
-    link: ({ value, children }: any) => (
+    em: ({ children }: { children?: React.ReactNode }) => <em className="italic">{children}</em>,
+    link: ({ value, children }: { value?: { href?: string }; children?: React.ReactNode }) => (
       <a
         href={value?.href}
         target="_blank"
@@ -96,10 +108,10 @@ const portableComponents = {
   },
 
   list: {
-    bullet: ({ children }: any) => (
+    bullet: ({ children }: { children?: React.ReactNode }) => (
       <ul className="list-disc pl-6 space-y-2 my-4">{children}</ul>
     ),
-    number: ({ children }: any) => (
+    number: ({ children }: { children?: React.ReactNode }) => (
       <ol className="list-decimal pl-6 space-y-2 my-4">{children}</ol>
     ),
   },

@@ -1,3 +1,5 @@
+import { PortableTextBlock } from '@portabletext/types';
+
 export interface NewsItem {
   _id: string;
   title: string;
@@ -5,5 +7,5 @@ export interface NewsItem {
   slug: string;
   date?: string;
   imageUrl?: string;
-  body?: any;
+  body?: PortableTextBlock[];
 }

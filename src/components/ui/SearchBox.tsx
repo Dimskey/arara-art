@@ -4,10 +4,17 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useLang } from "@/contexts/langContext";
 
+interface SearchResult {
+  _id: string;
+  slug: string;
+  title: string;
+  imageUrl?: string;
+}
+
 export default function SearchBox() {
   const { lang } = useLang();
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState<SearchResult[]>([]);
 
   useEffect(() => {
     if (!query.trim()) {
@@ -37,7 +44,7 @@ export default function SearchBox() {
     <div className="relative">
       <input
         type="text"
-        className="px-3 py-2 w-full border rounded-md bg-[var(--color-background)] text-sm"
+        className="px-3 py-2 w-full border  bg-[var(--color-background)] text-sm"
         placeholder="Search products..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
@@ -45,7 +52,7 @@ export default function SearchBox() {
 
       {results.length > 0 && (
         <div className="absolute z-50 mt-2 w-full bg-[var(--color-background)] border rounded-md shadow-lg">
-          {results.map((item: any) => (
+          {results.map((item) => (
             <Link
               key={item._id}
               href={`/${lang}/product/${item.slug}`}

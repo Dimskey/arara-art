@@ -3,11 +3,16 @@
 import { NewsItem } from "@/types/news";
 import Image from "next/image";
 import Link from "next/link";
-import { urlFor } from "@/sanity/lib/image";
 import { useLang } from "@/contexts/langContext";
 
 export default function NewsClient({ news, lang }: { news: NewsItem[]; lang?: string }) {
   const { t } = useLang();
+  
+  // Helper function to ensure t() returns string
+  const tString = (key: string): string => {
+    const value = t(key);
+    return typeof value === "string" ? value : key;
+  };
   
   // Ensure lang is a valid string, fallback to 'en' if undefined or invalid
   const validLang = typeof lang === 'string' ? lang : 'en';
@@ -17,13 +22,13 @@ export default function NewsClient({ news, lang }: { news: NewsItem[]; lang?: st
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="flex items-center justify-between border-b border-[var(--color-border)] pb-3 mb-12">
           <h1 className="text-4xl lg:text-5xl font-medium tracking-[0.2em] uppercase">
-            {t("news.title")}
+            {tString("news.title")}
           </h1>
           <Link
             href={`/${validLang}/news`}
             className="px-8 py-3 text-sm uppercase tracking-widest text-[var(--color-accent)] hover:text-[var(--color-foreground)] transition"
           >
-            {t("news.viewAll")}
+            {tString("news.viewAll")}
           </Link>
         </div>
 
@@ -31,7 +36,7 @@ export default function NewsClient({ news, lang }: { news: NewsItem[]; lang?: st
           {news.length === 0 ? (
             <div className="col-span-full text-center py-12">
               <p className="text-[var(--color-accent)] opacity-60">
-                {t("news.empty")}
+                {tString("news.empty")}
               </p>
             </div>
           ) : (
@@ -44,7 +49,7 @@ export default function NewsClient({ news, lang }: { news: NewsItem[]; lang?: st
                 <div className="aspect-[4/3] relative overflow-hidden">
                   {item.imageUrl && (
                     <Image
-                      src={urlFor(item.imageUrl).width(600).url()}
+                      src={item.imageUrl}
                       alt={item.title}
                       fill
                       sizes="(max-width: 768px) 100vw, 25vw"

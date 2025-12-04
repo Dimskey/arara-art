@@ -9,13 +9,18 @@ type Lang = "en" | "id";
 interface LangContextProps {
   lang: Lang;
   setLang: (lang: Lang) => void;
-  t: (key: string) => any; 
+  t: (key: string) => string | Record<string, unknown> | unknown[]; 
 }
 
-const translations: Record<Lang, Record<string, any>> = { en, id }; 
+const translations: Record<Lang, Record<string, unknown>> = { en, id }; 
 
-function getNestedValue(obj: any, key: string): any {
-  return key.split(".").reduce((acc, part) => acc && acc[part], obj);
+function getNestedValue(obj: Record<string, unknown>, key: string): string | Record<string, unknown> | unknown[] {
+  return key.split(".").reduce((acc, part) => {
+    if (acc && typeof acc === 'object' && part in acc) {
+      return acc[part] as Record<string, unknown>;
+    }
+    return undefined;
+  }, obj as Record<string, unknown> | undefined) as string | Record<string, unknown> | unknown[];
 }
 
 const LanguageContext = createContext<LangContextProps | undefined>(undefined);
@@ -32,7 +37,7 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [pathname]);
 
-  const t = (key: string): any => {
+  const t = (key: string): string | Record<string, unknown> | unknown[] => {
     const value = getNestedValue(translations[lang], key);
     return value ?? key; // fallback 
   };

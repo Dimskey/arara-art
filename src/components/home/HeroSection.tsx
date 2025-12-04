@@ -5,13 +5,20 @@ import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { gsap } from "gsap";
 import Image from "next/image";
-import { useLang } from "@/contexts/langContext";
 import { urlFor } from "@/sanity/lib/image";
 
 
 
-export default function HeroNewsSlider({ slides }: { slides: any[] }) {
-  const { lang } = useLang();
+interface HeroSlide {
+  _id?: string;
+  title?: string;
+  description?: string;
+  imageUrl?: string | null;
+  image?: { asset?: { _ref?: string; _type?: string } };
+  link?: string | null;
+}
+
+export default function HeroNewsSlider({ slides }: { slides: HeroSlide[] }) {
 
   // Embla carousel
   const [viewportRef, emblaApi] = useEmblaCarousel(
@@ -94,7 +101,7 @@ export default function HeroNewsSlider({ slides }: { slides: any[] }) {
 
       // button fade-in (delay slightly so typewriter starts first)
       // CTA LINK
-      setCtaUrl(hasLink ? s.link : null);
+      setCtaUrl(hasLink && s.link ? s.link : null);
 
       if (btnRef.current) {
         if (hasLink) {
@@ -176,7 +183,7 @@ export default function HeroNewsSlider({ slides }: { slides: any[] }) {
         {/* Embla viewport */}
         <div className="embla overflow-hidden h-full" ref={viewportRef}>
           <div className="flex h-full">
-            {slides.map((s: any, i: number) => {
+            {slides.map((s, i: number) => {
               const imageUrl =
                 s.imageUrl ??
                 (s.image ? urlFor(s.image).width(1600).height(900).url() : null);
@@ -217,7 +224,7 @@ export default function HeroNewsSlider({ slides }: { slides: any[] }) {
             ref={btnRef}
             href={ctaUrl ?? "#"}
             target={ctaUrl?.startsWith("http") ? "_blank" : "_self"}
-            className="inline-block mt-4 px-6 py-3 bg-white/20 border border-white/40 backdrop-blur-md rounded-lg text-white hover:bg-white/30 transition opacity-0"
+            className="inline-block mt-4 px-6 py-3 bg-white/20 border-1 border-white/40 backdrop-blur-md  text-white hover:bg-white/30 transition opacity-0"
           >
             Learn more →
           </a>

@@ -17,18 +17,23 @@ interface Product {
   tokopediaLink?: string;
 }
 
+interface ProductParams {
+  slug: string;
+  language: string;
+}
+
 /* ============================================
    🔹 Ambil semua slug untuk pre-render (ISR)
 ============================================ */
 export async function generateStaticParams() {
-  const products = await client.fetch(
+  const products = await client.fetch<ProductParams[]>(
     `*[_type == "product" && defined(slug.current)]{
       "slug": slug.current,
       language
     }`
   );
 
-  return products.map((product: any) => ({
+  return products.map((product) => ({
     slug: String(product.slug),
     lang: String(product.language),
   }));

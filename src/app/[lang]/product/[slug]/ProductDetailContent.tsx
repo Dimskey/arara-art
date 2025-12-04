@@ -28,7 +28,7 @@ export default function ProductDetailContent({
 }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isIndoClient, setIsIndoClient] = useState<boolean | null>(null);
-  const { lang, t } = useLang();
+  const { lang } = useLang();
 
   // === Detect client location ===
   useEffect(() => {

@@ -5,9 +5,21 @@ import { collections } from "@/data/collections";
 import CollectionCard from "@/components/shared/CollectionCard";
 import { useLang } from "@/contexts/langContext";
 
+interface CollectionCardData {
+  title: string;
+  description: string;
+}
+
 export default function CollectionsSection() {
   const { t } = useLang();
-  const cards = t("collections.cards") as any[];
+  
+  // Helper function to ensure t() returns string
+  const tString = (key: string): string => {
+    const value = t(key);
+    return typeof value === "string" ? value : key;
+  };
+
+  const cards = t("collections.cards") as CollectionCardData[];
 
   return (
     <section id="collections" className=" border-t max-w-8xl mx-auto px-8 py-16 overflow-hidden">
@@ -15,10 +27,10 @@ export default function CollectionsSection() {
       {/* ✅ Title + Description */}
       <div className="text-center mb-12">
         <h2 className="text-4xl lg:text-5xl font-medium tracking-[0.25em]">
-          {t("collections.title")}
+          {tString("collections.title")}
         </h2>
         <p className="text-[var(--color-accent)]/80 mt-2 text-sm max-w-md mx-auto leading-relaxed">
-          {t("collections.paragraph")}
+          {tString("collections.paragraph")}
         </p>
       </div>
 

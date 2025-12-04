@@ -9,7 +9,7 @@ import { getHeroBanner } from "@/sanity/lib/getHeroBanner";
 export default async function Home({
    params,
 }: {
-   params: { lang: string };
+   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
 
