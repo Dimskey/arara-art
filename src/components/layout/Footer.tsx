@@ -111,7 +111,7 @@ export default function Footer() {
             </div>
             <div className="overflow-hidden border border-neutral-700 shadow-md">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m20!1m12!1m3!1d3957.730499696782!2d112.70232577373625!3d-7.27147769273554!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fdc85711b3f7%3A0x47baa64e5882ad2b!2sArara%20Art%2C%20Ethnic%20Accessories!5e0!3m2!1sid!2sid!4v1759825803827!5m2!1sid!2sid"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15830.921684758901!2d112.7049649!3d-7.2714866!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fdc85711b3f7%3A0x47baa64e5882ad2b!2sArara%20Art%2C%20Ethnic%20Accessories!5e0!3m2!1sid!2sid!4v1765992729640!5m2!1sid!2sid"
                 width="100%"
                 height="250"
                 style={{ border: 0 }}
