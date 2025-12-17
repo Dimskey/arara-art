@@ -3,7 +3,7 @@ import { Collection } from "@/types/collection";
 export const collections: Collection[] = [
   {
     id: "1",
-    image: "/images/WhatsApp Image 2025-10-14 at 12.27.16_49754f1d.jpg",
+    image: "/images/kalung.jpeg",
     slug: "five",
   },
   {
@@ -13,7 +13,7 @@ export const collections: Collection[] = [
   },
   {
     id: "3",
-    image: "/images/Pokecut_1760169271511 (1).jpg",
+    image: "/images/sirkam.jpeg",
     slug: "atelier",
   },
   {

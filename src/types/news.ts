@@ -1,11 +1,11 @@
-import { PortableTextBlock } from '@portabletext/types';
 
 export interface NewsItem {
   _id: string;
   title: string;
+  slug: string | { current: string }; // Support both formats
   excerpt?: string;
-  slug: string;
-  date?: string;
   imageUrl?: string;
-  body?: PortableTextBlock[];
+  date?: string;
+  body?: any;
+  language?: string;
 }

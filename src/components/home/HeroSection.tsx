@@ -5,20 +5,11 @@ import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { gsap } from "gsap";
 import Image from "next/image";
-import { urlFor } from "@/sanity/lib/image";
+import { NewsItem } from "@/types/news";
 
-
-
-interface HeroSlide {
-  _id?: string;
-  title?: string;
-  description?: string;
-  imageUrl?: string | null;
-  image?: { asset?: { _ref?: string; _type?: string } };
-  link?: string | null;
-}
-
-export default function HeroNewsSlider({ slides }: { slides: HeroSlide[] }) {
+export default function HeroNewsSlider({ news, lang = "en" }: { news: NewsItem[]; lang?: string }) {
+  // Ambil 4 berita terbaru
+  const slides = news.slice(0, 4);
 
   // Embla carousel
   const [viewportRef, emblaApi] = useEmblaCarousel(
@@ -72,12 +63,12 @@ export default function HeroNewsSlider({ slides }: { slides: HeroSlide[] }) {
   const animateSlideContent = useCallback(
     (index: number) => {
       // get slide data
-      const s = slides[index];
-      if (!s) return;
+      const newsItem = slides[index];
+      if (!newsItem) return;
 
-      const titleText = s.title ?? "";
-      const descText = s.description ?? "";
-      const hasLink = !!s.link;
+      const titleText = newsItem.title ?? "";
+      const descText = newsItem.excerpt ?? "";
+      const newsUrl = `/${lang}/news/${newsItem.slug}`;
 
       // kill previous tweens
       gsap.killTweensOf(titleRef.current);
@@ -88,7 +79,7 @@ export default function HeroNewsSlider({ slides }: { slides: HeroSlide[] }) {
         gsap.fromTo(
           titleRef.current,
           { x: -40, opacity: 0 },
-          { x: 0, opacity: 1, duration: 1., ease: "power3.out" }
+          { x: 0, opacity: 1, duration: 1, ease: "power3.out" }
         );
         titleRef.current.textContent = titleText;
       }
@@ -99,35 +90,28 @@ export default function HeroNewsSlider({ slides }: { slides: HeroSlide[] }) {
         runTypewriter(descText);
       }
 
-      // button fade-in (delay slightly so typewriter starts first)
       // CTA LINK
-      setCtaUrl(hasLink && s.link ? s.link : null);
+      setCtaUrl(newsUrl);
 
       if (btnRef.current) {
-        if (hasLink) {
-          btnRef.current.style.display = "";
-
-          gsap.fromTo(
-            btnRef.current,
-            { opacity: 0, y: 6 },
-            {
-              opacity: 1,
-              y: 0,
-              delay: 0.35,
-              duration: 0.45,
-              ease: "power3.out",
-            }
-          );
-        } else {
-          btnRef.current.style.display = "none";
-        }
+        btnRef.current.style.display = "";
+        gsap.fromTo(
+          btnRef.current,
+          { opacity: 0, y: 6 },
+          {
+            opacity: 1,
+            y: 0,
+            delay: 0.35,
+            duration: 0.45,
+            ease: "power3.out",
+          }
+        );
       }
-
 
       // restart progress
       animateProgress();
     },
-    [slides, animateProgress, runTypewriter]
+    [slides, animateProgress, runTypewriter, lang]
   );
 
   // hook: when embla ready, register select event
@@ -175,6 +159,15 @@ export default function HeroNewsSlider({ slides }: { slides: HeroSlide[] }) {
     };
   }, []);
 
+  // Jika tidak ada berita, tampilkan placeholder
+  if (slides.length === 0) {
+    return (
+      <section className="relative h-[90vh] md:h-[100vh] bg-gray-900 flex items-center justify-center">
+        <p className="text-white text-xl">No news available</p>
+      </section>
+    );
+  }
+
   // render
   return (
     <section className="relative h-[90vh] md:h-[100vh] overflow-hidden">
@@ -183,20 +176,18 @@ export default function HeroNewsSlider({ slides }: { slides: HeroSlide[] }) {
         {/* Embla viewport */}
         <div className="embla overflow-hidden h-full" ref={viewportRef}>
           <div className="flex h-full">
-            {slides.map((s, i: number) => {
-              const imageUrl =
-                s.imageUrl ??
-                (s.image ? urlFor(s.image).width(1600).height(900).url() : null);
+            {slides.map((newsItem, i) => {
+              const imageUrl = newsItem.imageUrl;
 
               return (
                 <div
-                  key={s._id ?? i}
+                  key={newsItem._id ?? i}
                   className="relative flex-[0_0_100%] h-full flex-shrink-0"
                 >
                   {imageUrl ? (
                     <Image
                       src={imageUrl}
-                      alt={s.title ?? `slide-${i}`}
+                      alt={newsItem.title ?? `slide-${i}`}
                       fill
                       priority={i === 0}
                       className="object-cover brightness-65"
@@ -223,12 +214,10 @@ export default function HeroNewsSlider({ slides }: { slides: HeroSlide[] }) {
           <a
             ref={btnRef}
             href={ctaUrl ?? "#"}
-            target={ctaUrl?.startsWith("http") ? "_blank" : "_self"}
-            className="inline-block mt-4 px-6 py-3 bg-white/20 border-1 border-white/40 backdrop-blur-md  text-white hover:bg-white/30 transition opacity-0"
+            className="inline-block mt-4 px-6 py-3 bg-white/20 border-1 border-white/40 backdrop-blur-md text-white hover:bg-white/30 transition opacity-0"
           >
-            Learn more →
+            Read more →
           </a>
-
         </div>
       </div>
 

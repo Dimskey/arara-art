@@ -40,8 +40,8 @@ export default function NewsClient({ news, lang }: { news: NewsItem[]; lang?: st
               </p>
             </div>
           ) : (
-            news.map((item) => (
-              <Link
+             news.slice(0, 4).map((item) => (
+              <Link 
                 key={item._id}
                 href={`/${validLang}/news/${item.slug}`}
                 className="border border-[var(--color-border)]  overflow-hidden group hover:border-[var(--color-accent)] transition"

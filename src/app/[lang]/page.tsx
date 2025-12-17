@@ -4,7 +4,7 @@ import CollectionsSection from "@/components/home/CollectionsSection";
 import CategoriesSection from "@/components/home/CategoriesSection";
 import AboutUs from "@/components/home/AboutUs";
 import NewsServer from "@/components/home/NewsServer";
-import { getHeroBanner } from "@/sanity/lib/getHeroBanner";
+import { getNewsByLanguage } from "@/sanity/lib/getNews";
 
 export default async function Home({
    params,
@@ -13,7 +13,8 @@ export default async function Home({
 }) {
   const { lang } = await params;
 
-  const slides = await getHeroBanner(lang);
+  // Fetch news data berdasarkan bahasa
+  const allNews = await getNewsByLanguage(lang);
 
   return (
     <>
@@ -22,10 +23,12 @@ export default async function Home({
       </div>
 
       <main>
-        <HeroNewsSlider slides={slides} />
+        {/* Hero slider menggunakan 4 berita terbaru */}
+        <HeroNewsSlider news={allNews} lang={lang} />
         <AboutUs />
         <CollectionsSection />
         <CategoriesSection />
+        {/* News section juga menggunakan data yang sama */}
         <NewsServer lang={lang} />
       </main>
     </>
