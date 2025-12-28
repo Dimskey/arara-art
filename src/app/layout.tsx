@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import Footer from "@/components/layout/Footer";
 import "./globals.css";
 import { LanguageProvider } from "@/contexts/langContext";
+import VisitorTracker from "@/components/home/VisitorTracker";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -29,12 +30,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${montserrat.variable}`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${cormorant.variable} ${montserrat.variable}`}
+      suppressHydrationWarning
+    >
       <body className="font-[family-name:var(--font-cormorant)] antialiased">
         <ThemeProvider>
           <LanguageProvider>
-          {children}
-          <Footer />
+
+            {/* Visitor Analytics Tracker */}
+            <VisitorTracker />
+
+            {children}
+            <Footer />
+
           </LanguageProvider>
         </ThemeProvider>
       </body>
