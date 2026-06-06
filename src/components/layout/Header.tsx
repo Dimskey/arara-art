@@ -14,14 +14,15 @@ export default function Header() {
   const { lang } = useLang();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // ✅ Anti-jitter scroll state
   const [isScrolled, setIsScrolled] = useState(false);
   const last = useRef(false);
-  const menuRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
       const y = window.scrollY;
 
+      // deadzone: baru berubah jika melewati batas jauh
       if (!last.current && y > 120) {
         setIsScrolled(true);
         last.current = true;
@@ -35,6 +36,8 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const menuRef = useRef<HTMLElement>(null);
+
   useEffect(() => {
     if (isMobileMenuOpen && menuRef.current) {
       gsap.fromTo(
@@ -44,9 +47,9 @@ export default function Header() {
           opacity: 1,
           y: 0,
           scale: 1,
-          duration: 0.6,
+          duration: 1.25,
           ease: "power2.out",
-          stagger: 0.08,
+          stagger: 0.58
         }
       );
     }
@@ -54,32 +57,20 @@ export default function Header() {
 
   return (
     <header
-      className="
-        sticky top-0 z-50 border-b border-[var(--color-border)]
-        backdrop-blur-md bg-[var(--color-background)]
-        transition-[background-color,transform,opacity] duration-500
-      "
+      className="p-3 sticky top-0 z-50 border-b border-[var(--color-border)]
+      backdrop-blur-md bg-[var(--color-background)/80]
+      transition-[background-color,transform,opacity] duration-500"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-3 flex flex-col">
-        {/* Logo */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col">
+
+        {/* Logo  */}
         <div
-          className={`
-            overflow-hidden text-center transition-[opacity,max-height,transform] duration-500
-            ${
-              isScrolled
-                ? "max-h-0 opacity-0 -translate-y-2"
-                : "max-h-12 opacity-100 translate-y-0"
-            }
-          `}
+          className={`overflow-hidden text-center transition-[opacity,max-height,transform] duration-500 
+          ${isScrolled ? "max-h-0 opacity-0 -translate-y-2" : "max-h-12 opacity-100 translate-y-0"}
+        `}
         >
           <Link href={`/${lang}`}>
-            <h1
-              className="
-                text-2xl sm:text-3xl lg:text-4xl font-medium
-                tracking-[0.22em] sm:tracking-[0.3em]
-                cursor-pointer hover:text-[var(--color-accent)] transition-colors
-              "
-            >
+            <h1 className="text-3xl lg:text-4xl font-medium tracking-[0.3em] cursor-pointer hover:text-[var(--color-accent)] transition-colors">
               ARARA.ART
             </h1>
           </Link>
@@ -87,19 +78,14 @@ export default function Header() {
 
         {/* Navigation Row */}
         <div
-          className={`
-            flex items-center justify-between relative gap-3
-            transition-transform duration-500
+          className={`flex items-center justify-between relative
+            transition-transform duration-500 
             ${isScrolled ? "lg:-translate-y-2" : "lg:translate-y-0"}
           `}
         >
-          {/* Desktop Theme Toggle */}
-          <div className="hidden lg:flex items-center">
+          <div className="flex items-center shrink-0">
             <ThemeToggle />
           </div>
-
-          {/* Mobile left spacer / brand mini */}
-          <div className="lg:hidden flex-1" />
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex absolute left-1/2 -translate-x-1/2">
@@ -116,35 +102,16 @@ export default function Header() {
             </div>
           </nav>
 
-          {/* Right Actions */}
-          <div
-            className="
-              flex items-center justify-end gap-2 sm:gap-3
-              max-w-full
-            "
-          >
-            {/* Mobile Theme Toggle */}
-            <div className="lg:hidden flex items-center shrink-0">
-              <ThemeToggle />
-            </div>
-
-            <div className="flex items-center shrink-0">
-              <LanguageSwitcher />
-            </div>
-
-            <div className="hidden sm:flex items-center shrink-0">
-              <SearchBox />
-            </div>
-
+          {/* Mobile - Lang + Hamburger */}
+          <div className="flex items-center  gap-4">
+            <LanguageSwitcher />
+          <div className="hidden sm:flex">
+            <SearchBox />
+           </div>
+            
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Toggle mobile menu"
-              className="
-                lg:hidden shrink-0 p-2 rounded-md
-                border border-[var(--color-border)]
-                hover:bg-[var(--color-muted)]
-                transition-colors
-              "
+              className="lg:hidden p-2 rounded-md border border-[var(--color-border)] hover:bg-[var(--color-muted)] transition-colors"
             >
               {isMobileMenuOpen ? (
                 <X className="w-5 h-5 text-[var(--color-accent)]" />
@@ -159,16 +126,12 @@ export default function Header() {
         {isMobileMenuOpen && (
           <nav
             ref={menuRef}
-            className="
-              lg:hidden w-full border-t border-[var(--color-border)]
-              mt-3 pt-4 pb-4
-            "
+            className="lg:hidden w-full border-t border-[var(--color-border)] mt-2 pt-4 pb-4"
           >
             <div className="flex flex-col gap-1 font-[family-name:var(--font-montserrat)] text-sm tracking-[0.15em]">
-              {/* Mobile Search */}
               <div className="sm:hidden px-4 pb-3">
-                <SearchBox />
-              </div>
+              <SearchBox />
+            </div>
 
               {NAV_LINKS.map((link) => (
                 <Link
